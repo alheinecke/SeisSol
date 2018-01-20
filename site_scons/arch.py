@@ -44,7 +44,8 @@ def getArchitectures():
   # knc = Knights Corner (Xeon Phi)
   # hsw = Haswell
   # knl = Knight Landing (Xeon Phi)
-  cpus = ['noarch', 'wsm', 'snb', 'knc', 'hsw', 'knl']
+  # skx = Skylake Xeon
+  cpus = ['noarch', 'wsm', 'snb', 'knc', 'hsw', 'knl', 'skx']
   precisions = ['s', 'd']
   return [p + c for c in cpus for p in precisions]
   
@@ -58,7 +59,8 @@ def getAlignment(architecture):
       'snb': 32,
       'hsw': 32,
       'knc': 64,
-      'knl': 64
+      'knl': 64,
+      'skx': 64 
   }
   return alignments[ getCpu(architecture) ]
   
@@ -74,7 +76,7 @@ def getFlags(architecture, compiler):
     flags =  ['-mavx']
   elif cpu == 'hsw':
     if compiler == 'intel':
-      flags = ['-xCORE-AVX2', '-fma']
+      flags = ['-march=core-avx2', '-fma']
     else:
       flags = ['-mavx2', '-mfma']
   elif cpu == 'knc':
@@ -84,12 +86,17 @@ def getFlags(architecture, compiler):
       flags = ['-xMIC-AVX512', '-fma', '-DNUMBER_OF_THREADS_PER_GLOBALDATA_COPY=4']
     else:
       flags = ['-mavx512f', '-mavx512cd', '-mavx512pf', '-mavx512er', '-mfma', '-DNUMBER_OF_THREADS_PER_GLOBALDATA_COPY=4']
+  elif cpu == 'skx':
+    if compiler == 'intel':
+      flags = ['-xCORE-AVX512', '-fma']
+    else:
+      flags = ['-mavx512f', '-mavx512cd', '-mavx512bw', '-mavx512dq', '-mavx512vl', '-mfma']
   else:
     flags = []
   
   # enable interproc. opts for small cores
   if cpu in ['knc', 'knl']:
-    flags.extend(['-ip'])
+    flags.extend(['-ip', '-ipo'])
               
   return flags
   

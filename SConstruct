@@ -491,7 +491,7 @@ if( env['integrateQuants'] ):
   env.Append(CPPDEFINES=['INTEGRATE_QUANTITIES'])
 
 # set pre compiler flags for matrix optimizations
-env.Append(CPPDEFINES=['GENERATEDKERNELS', 'CLUSTERED_LTS'])
+env.Append(CPPDEFINES=['GENERATEDKERNELS'])
 
 # set pre compiler flags commuincation thread
 # pthread is linked after the other libraries

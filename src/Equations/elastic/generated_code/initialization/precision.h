@@ -86,6 +86,10 @@
 #define SINGLE_PRECISION
 #endif
 
+#ifdef SSKX
+#define SINGLE_PRECISION
+#endif
+
 #ifdef SNOARCH
 #define SINGLE_PRECISION
 #endif
@@ -107,6 +111,10 @@
 #endif
 
 #ifdef DKNL
+#define DOUBLE_PRECISION
+#endif
+
+#ifdef DSKX
 #define DOUBLE_PRECISION
 #endif
 
