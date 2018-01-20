@@ -16,7 +16,8 @@ date
 
 T="$(date +%s)"
 
-mkdir -p bins
+rm -rf bin
+mkdir -p bin
 
 for ORDER in $ORDERS
 do
@@ -39,5 +40,11 @@ echo ""
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
 
-cp -v build/SeisSol_* bins/
+cd build/
+for i in `ls SeisSol_*`
+do
+  mv ${i} ./../bin/${i}
+done
+cd ./../
+
 rm -rf build/build_*/ build/SeisSol_*
