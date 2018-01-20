@@ -16,8 +16,8 @@ date
 
 T="$(date +%s)"
 
-rm -rf bins/
-mkdir -p bins/
+rm -rf bin/
+mkdir -p bin/
 
 for ORDER in $ORDERS
 do
@@ -43,7 +43,7 @@ echo "Time in seconds: ${T}"
 cd build/
 for i in `ls SeisSol_*`
 do 
-  mv ${i} ./../bins/${i}_head
+  mv ${i} ./../bin/${i}
 done
 cd ./../
 
