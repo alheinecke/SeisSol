@@ -93,6 +93,12 @@
 #ifdef DKNL
 #include <matrix_kernels/dgemm_knl.h>
 #endif
+#ifdef SSKX
+#include <matrix_kernels/sgemm_skx.h>
+#endif
+#ifdef DSKX
+#include <matrix_kernels/dgemm_skx.h>
+#endif
 #ifdef SNOARCH
 #include <matrix_kernels/sgemm_noarch.h>
 #endif

@@ -29,7 +29,7 @@
 // @author Alexander Breuer (breuer AT mytum.de, http://www5.in.tum.de/wiki/index.php/Dipl.-Math._Alexander_Breuer)
 // @author Alexander Heinecke (alexander.heinecke AT mytum.de, http://www5.in.tum.de/wiki/index.php/Alexander_Heinecke,_M.Sc.,_M.Sc._with_honors)
 // 
-// @date 2015-11-22 19:14:54.492700
+// @date 2015-11-22 19:13:49.745536
 // 
 // @section LICENSE
 // Copyright (c) 2012-2015, SeisSol Group
@@ -63,45 +63,16 @@
 // 
 // @section DESCRIPTION
 // Remark: This file was generated.
-#ifdef SWSM
-#include <initialization/bind_swsm.h>
+#ifndef SPARSESSKXH
+#define SPARSESSKXH
+
+#if defined( __SSE3__) || defined(__MIC__)
+#include <immintrin.h>
 #endif
-#ifdef SSNB
-#include <initialization/bind_ssnb.h>
+
+#include <cstddef>
+#ifndef NDEBUG
+extern long long libxsmm_num_total_flops;
 #endif
-#ifdef SHSW
-#include <initialization/bind_shsw.h>
-#endif
-#ifdef SKNC
-#include <initialization/bind_sknc.h>
-#endif
-#ifdef SKNL
-#include <initialization/bind_sknl.h>
-#endif
-#ifdef SSKX
-#include <initialization/bind_sskx.h>
-#endif
-#ifdef SNOARCH
-#include <initialization/bind_snoarch.h>
-#endif
-#ifdef DWSM
-#include <initialization/bind_dwsm.h>
-#endif
-#ifdef DSNB
-#include <initialization/bind_dsnb.h>
-#endif
-#ifdef DHSW
-#include <initialization/bind_dhsw.h>
-#endif
-#ifdef DKNC
-#include <initialization/bind_dknc.h>
-#endif
-#ifdef DKNL
-#include <initialization/bind_dknl.h>
-#endif
-#ifdef DSKX
-#include <initialization/bind_dskx.h>
-#endif
-#ifdef DNOARCH
-#include <initialization/bind_dnoarch.h>
+
 #endif

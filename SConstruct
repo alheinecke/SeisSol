@@ -182,7 +182,7 @@ vars.AddVariables(
   EnumVariable( 'arch',
                 'precision -- s for single- and d for double precision -- and architecture used. Warning: \'noarch\' calls the fall-back code and is outperformed by architecture-specific optimizations (if available) greatly.',
                 'dnoarch',
-                allowed_values=( 'snoarch', 'dnoarch', 'swsm', 'dwsm', 'ssnb', 'dsnb', 'sknc', 'dknc', 'shsw', 'dhsw', 'sknl', 'dknl' )
+                allowed_values=( 'snoarch', 'dnoarch', 'swsm', 'dwsm', 'ssnb', 'dsnb', 'sknc', 'dknc', 'shsw', 'dhsw', 'sknl', 'dknl', 'sskx', 'dskx' )
               ),
 
   EnumVariable( 'scalasca', 'instruments code with scalasca. \n \'default\': instruments only outer loops. \n'+\
@@ -364,10 +364,10 @@ elif env['arch'] in ['swsm', 'dwsm']:
 elif env['arch'] in ['shsw', 'dhsw']:
   env['alignment'] = 32
   if env['compiler'] == 'intel':
-    env.Append( CFLAGS    = ['-xCORE-AVX2', '-fma'],
-                CXXFLAGS  = ['-xCORE-AVX2', '-fma'],
-                F90FLAGS  = ['-xCORE-AVX2', '-fma'],
-                LINKFLAGS = ['-xCORE-AVX2', '-fma']  )
+    env.Append( CFLAGS    = ['-march=core-avx2', '-fma'],
+                CXXFLAGS  = ['-march=core-avx2', '-fma'],
+                F90FLAGS  = ['-march=core-avx2', '-fma'],
+                LINKFLAGS = ['-march=core-avx2', '-fma']  )
   else:
     env.Append( CFLAGS    = ['-mavx2', '-mfma'],
                 CXXFLAGS  = ['-mavx2', '-mfma'],
@@ -391,6 +391,18 @@ elif env['arch'] in ['sknl', 'dknl']:
                 CXXFLAGS  = ['-mavx512f', '-mavx512cd', '-mavx512pf', '-mavx512er', '-mfma', '-DENABLE_MATRIX_PREFETCH', '-DENABLE_STREAM_MATRIX_PREFETCH', '-DNUMBER_OF_THREADS_PER_GLOBALDATA_COPY=4'],
                 F90FLAGS  = ['-mavx512f', '-mavx512cd', '-mavx512pf', '-mavx512er', '-mfma', '-DENABLE_MATRIX_PREFETCH', '-DENABLE_STREAM_MATRIX_PREFETCH', '-DNUMBER_OF_THREADS_PER_GLOBALDATA_COPY=4'],
                 LINKFLAGS = ['-mavx512f', '-mavx512cd', '-mavx512pf', '-mavx512er', '-mfma', '-DENABLE_MATRIX_PREFETCH', '-DENABLE_STREAM_MATRIX_PREFETCH', '-DNUMBER_OF_THREADS_PER_GLOBALDATA_COPY=4']  )
+elif env['arch'] in ['sskx', 'dskx']:
+  env['alignment'] = 64
+  if env['compiler'] == 'intel':
+    env.Append( CFLAGS    = ['-xCORE-AVX512', '-fma', '-DENABLE_MATRIX_PREFETCH'],
+                CXXFLAGS  = ['-xCORE-AVX512', '-fma', '-DENABLE_MATRIX_PREFETCH'],
+                F90FLAGS  = ['-xCORE-AVX512', '-fma', '-DENABLE_MATRIX_PREFETCH'],
+                LINKFLAGS = ['-xCORE-AVX512', '-fma', '-DENABLE_MATRIX_PREFETCH'] )
+  else:
+    env.Append( CFLAGS    = ['-mavx512f', '-mavx512cd', '-mavx512dq', '-mavx512bw', '-mavx512vl', '-mfma', '-DENABLE_MATRIX_PREFETCH'],
+                CXXFLAGS  = ['-mavx512f', '-mavx512cd', '-mavx512dq', '-mavx512bw', '-mavx512vl', '-mfma', '-DENABLE_MATRIX_PREFETCH'],
+                F90FLAGS  = ['-mavx512f', '-mavx512cd', '-mavx512dq', '-mavx512bw', '-mavx512vl', '-mfma', '-DENABLE_MATRIX_PREFETCH'],
+                LINKFLAGS = ['-mavx512f', '-mavx512cd', '-mavx512dq', '-mavx512bw', '-mavx512vl', '-mfma', '-DENABLE_MATRIX_PREFETCH']  )
 else:
   #assert(env['compileMode'] == 'debug')
   pass

@@ -93,6 +93,12 @@
 #ifdef DKNL
 #include <matrix_kernels/sparse_dknl.h>
 #endif
+#ifdef SSKX
+#include <matrix_kernels/sparse_sskx.h>
+#endif
+#ifdef DSKX
+#include <matrix_kernels/sparse_dskx.h>
+#endif
 #ifdef SNOARCH
 #include <matrix_kernels/sparse_snoarch.h>
 #endif
